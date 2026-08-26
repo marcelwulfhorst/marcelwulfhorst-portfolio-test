@@ -1,344 +1,253 @@
 <!-- Das ist ein Test-Kommentar -->
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css">
+    <meta name="description" content="Marcel Wulfhorst – Prozessentwickler, Digitalisierer und Programmierer bei INNO TAPE.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css"
+        integrity="sha512-MqL4+Io386IOPMKKyplKII0pVW5e+kb+PI/I3N87G3fHIfrgNNsRpzIXEi+0MQC0sR9xZNqZqCYVcC61fL5+Vg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="style.css">
     <title>Personal Portfolio Website | Marcel Wulfhorst</title>
+    <script>
+        if (window.location.hash) {
+            document.documentElement.classList.add('anchor-loading');
+        }
+    </script>
 </head>
 
 <body>
 
     <nav class="navbar">
 
-        <a href="#" class="navbar__logo"><i class="ri-code-s-slash-line"></i> Logo.</a>
+        <a href="#" class="navbar__logo">MARCEL WULFHORST</a>
 
         <div class="navbar__menu">
-            <a href="#" class="navbar__link">Home</a>
-            <a href="#" class="navbar__link">Projects</a>
-            <a href="#" class="navbar__link">Skills</a>
-            <a href="#" class="navbar__link">About</a>
-        </div>
-
-        <div class="navbar__actions">
-            <div class="navbar__location">
-                <h5>USA, New York</h5>
-                <p>6:18:31 pm</p>
-            </div>
-            <button class="btn">Get a Quote</button>
+            <a href="#hero" class="navbar__link">Über mich</a>
+            <a href="#portfolio" class="navbar__link">Projekte</a>
+            <a href="#career" class="navbar__link">Bio</a>
+            <a href="#contact" class="navbar__link">Kontakt</a>
         </div>
 
     </nav>
 
-    <section class="hero">
+    <main>
 
-        <div class="hero__content">
+    <section class="hero" id="hero">
+
+        <div class="hero__intro">
             <img src="assets/marcelwulfhorstprofile.jpg" alt="Marcel Wulfhorst" class="hero__image">
-            <div class="hero__text">
-                <h2>Hi, ich bin Marcel Wulfhorst!</h2>
-                <p>Ein Prozessentwickler, Digitalisierer und Programmierer.
-                Bei INNO TAPE entwickle ich digitale Lösungen für die Prozessoptimierung und -automatisierung. Als Projektentwickler präge ich die Prozessvision und setze diese in die Praxis um. Aber hinter mir steckt so viel mehr als nur die Arbeit. Ich bin ein kreativer Kopf, der gerne neue Ideen entwickelt und umsetzt. Scrolle nach unten und lerne mich kennen.</p>
+            <div class="hero__intro_text">
+                <h1>Hi, ich bin Marcel Wulfhorst!</h1>
+                <p>
+                    Ein Prozessentwickler, Digitalisierer und Programmierer.
+                    Bei INNO TAPE entwickle ich digitale Lösungen für die Prozessoptimierung und -automatisierung. Als Projektentwickler präge ich die Prozessvision und setze diese in die Praxis um. Aber hinter mir steckt so viel mehr als nur die Arbeit. Ich bin ein kreativer Kopf, der gerne neue Ideen entwickelt und umsetzt. Scrolle nach unten und lerne mich kennen.
+                </p>
             </div>
         </div>
         
+        <div class="hero__current">
+            <div class="hero__current_text">
+                <h3>
+                    Aktuell erweitere ich meine Fertigkeiten und Kenntnisse im Bereich der Programmierung.</h3>
+                <p>
+                    Ich habe bereits einige Softwarelösungen umgesetzt, weshalb meine praktische Erfahrung gepaart mit der theoretischen Lernerfahrung mich dazu befähigt, innovative und prozessoptimierende Lösungen zielgerichtet und eigenständig zu realisieren.
+                </p>
+            </div>
+            <img src="assets/aktuelles.jpg" alt="Marcel Wulfhorst" class="hero__image">
+        </div>
+
         <div class="hero__experience">
-            <h3>Aktuell erweitere ich meine Fertigkeiten und Kenntnisse im Bereich der Programmierung.</h3>
-            <p>Ich habe bereits einige Softwarelösungen umgesetzt, weshalb meine praktische Erfahrung gepaart mit der theoretischen Lernerfahrung mich dazu befähigt, innovative und prozessoptimierende Lösungen zielgerichtet und eigenständig zu realisieren.</p>
-        </div>
-
-        <div class="hero__intro">
-            <h3>Seit über 15 Jahren bin ich in dem Bereichen Produktion und Digitalisierung tätig.</h3>
-            <p>Als Entwickler habe ich gemeinsam mit Kollegen und Kunden interaktive Erlebnisse und Inhalte für etablierte Automobilhersteller und -Zulieferer entwickelt.</p>
-            <div class="hero__actions">
-                <button class="btn">Work With Me</button>
-                <button class="btn btn--secondary">See My Portfolio</button>
+            <div class="hero__experience_content">
+                <img src="assets/erfahrung.jpg" alt="Marcel Wulfhorst" class="hero__image">
+                <div class="hero__experience_text">
+                    <h3>Seit über 15 Jahren bin ich in dem Bereichen Produktion und Digitalisierung tätig.</h3>
+                    <p>
+                        Als Entwickler habe ich gemeinsam mit Kollegen und Kunden interaktive Erlebnisse und Inhalte für etablierte Automobilhersteller und -Zulieferer entwickelt.
+                    </p>
+                    <div class="hero__actions">
+                        <a href="#contact" class="btn">Work With Me</a>
+                        <a href="#portfolio" class="btn btn--secondary">Portfolio ansehen</a>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="hero__socials">
-            <a href="#"><i class="ri-instagram-line"></i></a>
-            <a href="#"><i class="ri-dribbble-line"></i></a>
-            <a href="#"><i class="ri-linkedin-box-line"></i></a>
-            <a href="#"><i class="ri-youtube-line"></i></a>
         </div>
 
     </section>
 
-    <section class="skills">
-
-        <div class="skills__desc">
-            <h3>Experienced Across Multiple Projects and Technologies</h3>
-            <p>Bringing creativity and technical proficiency to building responsive web applications and enhancing user
-                experiences.</p>
-
-            <div class="skills__actions">
-                <button class="btn">Work With Me</button>
-                <button class="btn btn--secondary">Send Email</button>
-            </div>
-        </div>
-
-        <div class="skills__stats">
-            <i class="ri-codepen-line"></i>
-            <div class="skill__info">
-                <h5>40+</h5>
-                <p>JavaScript Projects</p>
-            </div>
-            <i class="ri-reactjs-line"></i>
-            <div class="skill__info">
-                <h5>12+</h5>
-                <p>Remote Projects</p>
-            </div>
-            <div class="skill__info">
-                <h5>50+</h5>
-                <p>Codepen Projects</p>
-            </div>
-            <i class="ri-rocket-line"></i>
-            <div class="skill__info">
-                <h5>20+</h5>
-                <p>React Projects</p>
-            </div>
-            <i class="ri-remote-control-line"></i>
-        </div>
-
-    </section>
-
-    <section class="showcase">
+    <section class="showcase" id="portfolio">
 
         <div class="showcase__header">
-            <h3>I Can Help You With:</h3>
-            <button class="btn">See My Work</button>
+            <h3>Projekt Portfolio</h3>
         </div>
 
         <div class="showcase_categories">
             <section class="category">
-                <div class="category__header">
-                    <div class="category__title">
-                        <i class="ri-macbook-line"></i>
-                        <h4>Portfolio Websites</h4>
-                    </div>
-                    <div class="category__desc">
-                        <p>Designing and developing eye-catching, fully responsive portfolio websites that highlight
-                            your skills and projects, ensuring a professional online presence.</p>
-                        <a href="#"><i class="ri-share-circle-line"></i></a>
-                    </div>
-                </div>
-
                 <div class="category__projects">
-                    <div class="project-card">
-                        <img src="assets/chatbot.png" alt="Project 1" class="project-card__image">
-                        <div class="project-card__info">
-                            <h5>ERP-Chatbot</h5>
-                            <p>August 2023</p>
+                    <a class="project-card" href="projekte/erp-chatbot.html">
+                        <img src="assets/chatbot.png" alt="Portfolio 1" class="project-card__image">
+                        <div class="project-card__body">
+                            <div class="project-card__info">
+                                <h5>ERP-Chatbot</h5>
+                                <p>2026</p>
+                            </div>
+                            <p class="project-card__desc">
+                                Integration eines KI-Chatbots in das ERP-System Microsoft Dynamics BC365 (BC14).
+                            </p>
                         </div>
-                        <p class="project-card__desc">Hier kommt ein Beispieltext rein mein Freund.
-                            Was wurde hier gemacht. Kurz und knapp.
-                            Dies das und jenes.
-                            Das wars jetzt aber auch.</p>
-                        <button class="btn">View Live Demo</button>
-                    </div>
-                    <div class="project-card">
+                    </a>
+                    <a class="project-card" href="projekte/bde.html">
                         <img src="assets/bde.png" alt="Portfolio 2" class="project-card__image">
-                        <div class="project-card__info">
-                            <h5>BDE</h5>
-                            <p>August 2023</p>
+                        <div class="project-card__body">
+                            <div class="project-card__info">
+                                <h5>BDE</h5>
+                                <p>2025</p>
+                            </div>
+                            <p class="project-card__desc">
+                                Einführung einer Betriebsdatenerfassung (BDE) zur Optimierung des Produktionsprozesses.
+                            </p>
                         </div>
-                        <p class="project-card__desc">Hier kommt ein Beispieltext rein mein Freund.
-                            Was wurde hier gemacht. Kurz und knapp.
-                            Dies das und jenes.
-                            Das wars jetzt aber auch.</p>
-                        <button class="btn">View Live Demo</button>
-                    </div>
-                    <div class="project-card">
+                    </a>
+                    <a class="project-card" href="projekte/produktprojekte.html">
                         <img src="assets/produktprojekte.png" alt="Portfolio 3" class="project-card__image">
-                        <div class="project-card__info">
-                            <h5>Produktprojekte</h5>
-                            <p>August 2023</p>
+                        <div class="project-card__body">
+                            <div class="project-card__info">
+                                <h5>Auftragsabwicklung</h5>
+                                <p>2026</p>
+                            </div>
+                            <p class="project-card__desc">
+                                Digitalisierung und Automatisierung der Auftragsabwicklung von der Bestellung bis zum Versand mit Power Automate.
+                            </p>
                         </div>
-                        <p class="project-card__desc">Hier kommt ein Beispieltext rein mein Freund.
-                            Was wurde hier gemacht. Kurz und knapp.
-                            Dies das und jenes.
-                            Das wars jetzt aber auch.</p>
-                        <button class="btn">View Live Demo</button>
-                    </div>
-                    <div class="project-card">
-                        <img src="assets/item-4.png" alt="Portfolio 4" class="project-card__image">
-                        <div class="project-card__info">
-                            <h5>Portfolio-4</h5>
-                            <p>August 2023</p>
+                    </a>
+                    <a class="project-card" href="projekte/dynamics-nav.html">
+                        <img src="assets/dynamics-nav.avif" alt="Portfolio 4" class="project-card__image">
+                        <div class="project-card__body">
+                            <div class="project-card__info">
+                                <h5>Dynamics 365 BC / NAV</h5>
+                                <p>2022</p>
+                            </div>
+                            <p class="project-card__desc">
+                                Einführung von Microsoft Dynamics NAV zur Digitalisierung der Produktionsprozesse.
+                            </p>
                         </div>
-                        <p class="project-card__desc">Hier kommt ein Beispieltext rein mein Freund.
-                            Was wurde hier gemacht. Kurz und knapp.
-                            Dies das und jenes.
-                            Das wars jetzt aber auch.</p>
-                        <button class="btn">View Live Demo</button>
-                    </div>
-                                        <div class="project-card">
-                        <img src="assets/item-4.png" alt="Portfolio 5" class="project-card__image">
-                        <div class="project-card__info">
-                            <h5>Portfolio-4</h5>
-                            <p>August 2023</p>
-                        </div>
-                        <p class="project-card__desc">Hier kommt ein Beispieltext rein mein Freund.
-                            Was wurde hier gemacht. Kurz und knapp.
-                            Dies das und jenes.
-                            Das wars jetzt aber auch.</p>
-                        <button class="btn">View Live Demo</button>
-                    </div>
+                    </a>
                 </div>
-
             </section>
-
-            <section class="category">
-                <div class="category__header">
-                    <div class="category__title">
-                        <i class="ri-group-2-line"></i>
-                        <h4>Website Development</h4>
-                    </div>
-                    <div class="category__desc">
-                        <p>End-to-end development of responsive websites that look great on all devices, with a focus on
-                            performance and aesthetics.</p>
-                        <a href="#"><i class="ri-share-circle-line"></i></a>
-                    </div>
-                </div>
-
-                <div class="category__projects">
-                    <div class="project-card">
-                        <img src="assets/item-5.png" alt="NFT Landing" class="project-card__image">
-                        <div class="project-card__info">
-                            <h5>NFT Landing</h5>
-                            <p>August 2023</p>
-                        </div>
-                        <p class="project-card__desc">Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                            Sit autem soluta consequatur, sequi
-                            et sint laudantium non rem veritatis.</p>
-                        <button class="btn">View Live Demo</button>
-                    </div>
-                    <div class="project-card">
-                        <img src="assets/item-6.png" alt="Music Platform" class="project-card__image">
-                        <div class="project-card__info">
-                            <h5>Music Platform</h5>
-                            <p>August 2023</p>
-                        </div>
-                        <p class="project-card__desc">Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                            Sit autem soluta consequatur, sequi
-                            et sint laudantium non rem veritatis.</p>
-                        <button class="btn">View Live Demo</button>
-                    </div>
-                    <div class="project-card">
-                        <img src="assets/item-7.png" alt="Crypto Market" class="project-card__image">
-                        <div class="project-card__info">
-                            <h5>Crypto Market</h5>
-                            <p>August 2023</p>
-                        </div>
-                        <p class="project-card__desc">Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                            Sit autem soluta consequatur, sequi
-                            et sint laudantium non rem veritatis.</p>
-                        <button class="btn">View Live Demo</button>
-                    </div>
-                    <div class="project-card">
-                        <img src="assets/item-8.png" alt="Jobs Platform" class="project-card__image">
-                        <div class="project-card__info">
-                            <h5>Jobs Platform</h5>
-                            <p>August 2023</p>
-                        </div>
-                        <p class="project-card__desc">Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                            Sit autem soluta consequatur, sequi
-                            et sint laudantium non rem veritatis.</p>
-                        <button class="btn">View Live Demo</button>
-                    </div>
-                </div>
-
-            </section>
-
         </div>
 
     </section>
 
-    <section class="career">
+    <section class="career" id="career">
         <div class="career__jobs">
-            <h3>Work Experience</h3>
+            <h3>Berufserfahrung</h3>
             <div class="job">
                 <i class="ri-pen-nib-line"></i>
                 <div class="job__info">
-                    <h5>Frontend Developer at <span>TechCorp</span></h5>
-                    <p>February 2020 - Present</p>
+                    <h5>Projekt- und Entwicklungsingenieur </span></h5>
+                    <p>INNO TAPE GmbH</span></h5>
+                    <p>Oktober 2019 - heute</p>
                 </div>
             </div>
             <div class="job">
                 <i class="ri-reactjs-fill"></i>
                 <div class="job__info">
-                    <h5>React Developer at <span>WebSolutions</span></h5>
-                    <p>February 2018 – February 2020</p>
+                    <h5>Teamleitung Prozessentwicklung </span></h5>
+                    <p>INNO TAPE GmbH</p>
+                    <p>Oktober 2017 – September 2020</p>
                 </div>
             </div>
             <div class="job">
                 <i class="ri-paint-brush-line"></i>
                 <div class="job__info">
-                    <h5>UI/UX Developer at <span>StartupX</span></h5>
-                    <p>March 2016 – January 2018</p>
+                    <h5>Teamleitung Produktionstechnik </span></h5>
+                    <p>INNO TAPE GmbH</p>
+                    <p>August 2014 – September 2017</p>
                 </div>
             </div>
         </div>
 
         <div class="career__awards">
-            <h3>Awards & Recognition</h3>
+            <h3>Zusatzqualifikationen</h3>
             <div class="award">
                 <div>
                     <i class="ri-medal-fill"></i>
                     <div class="award__info">
-                        <h5>Fron-Dev of the Year at <span>Dev Awards</span></h5>
-                        <p>November 2023</p>
+                        <h5>Sicherheitsbeauftragter</h5>
+                        <p>BGHW zertifiziert</p>
+                        <p>August 2016</p>
                     </div>
                 </div>
-                <a href="#"><i class="ri-external-link-line"></i></a>
+                <a href="#" aria-label="Auszeichnung im Detail ansehen"><i class="ri-external-link-line"></i></a>
             </div>
             <div class="award">
                 <div>
                     <i class="ri-javascript-line"></i>
                     <div class="award__info">
-                        <h5>Code Mastery Award at <span>CodeFest</span></h5>
-                        <p>January 2023</p>
+                        <h5>Ausbilder-Eignungsprüfung (AEVO)</h5>
+                        <p>IHK zertifiziert</p>
+                        <p>Juli 2014</p>
                     </div>
                 </div>
-                <a href="#"><i class="ri-external-link-line"></i></a>
+                <a href="#" aria-label="Auszeichnung im Detail ansehen"><i class="ri-external-link-line"></i></a>
             </div>
             <div class="award">
                 <div>
                     <i class="ri-award-fill"></i>
                     <div class="award__info">
-                        <h5>Top Designer at <span>Design Awards</span></h5>
-                        <p>August 2022</p>
+                        <h5>Qualitätsbeauftragter & Interner Auditor</h5>
+                        <p>Dekra zertifiziert</p>
+                        <p>Juni 2014</p>
                     </div>
                 </div>
-                <a href="#"><i class="ri-external-link-line"></i></a>
+                <a href="#" aria-label="Auszeichnung im Detail ansehen"><i class="ri-external-link-line"></i></a>
             </div>
         </div>
 
     </section>
 
-    <section class="contact">
-        <h5>Got a Projects?</h5>
-        <h2>Let's Work Together!</h2>
-        <button class="btn">Send Message</button>
-        <p>Phone: <span>+11111111111</span></p>
+    <section class="contact" id="contact">
+        <h5>Nimm Kontakt auf</h5>
+        <h2>Du kannst mich auf digitalen Plattformen unter @marcelwulfhorst erreichen.
+            <br>Für geschäftliche Anfragen kontaktiere mich gern per Mail an <a href="mailto:info@marcelwulfhorst.de">info@marcelwulfhorst.de</a></h2>
     </section>
+
+    </main>
 
     <footer class="footer">
         <div class="footer__brand">
-            <a href="#">Logo.</a>
             <p>© 2026 Marcel Wulfhorst.</p>
         </div>
-        <div class="footer__links">
-            <a href="#">Home</a>
-            <a href="#">Projects</a>
-            <a href="#">Skills</a>
-            <a href="#">About</a>
+
+        <div class="hero__socials">
+            <a href="#" aria-label="Instagram"><i class="ri-instagram-line"></i></a>
+            <a href="#" aria-label="Dribbble"><i class="ri-dribbble-line"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="ri-linkedin-box-line"></i></a>
+            <a href="#" aria-label="YouTube"><i class="ri-youtube-line"></i></a>
         </div>
     </footer>
+
+    <script>
+        (function () {
+            function revealAtAnchor() {
+                if (window.location.hash) {
+                    var target = document.querySelector(window.location.hash);
+                    if (target) {
+                        target.scrollIntoView();
+                    }
+                }
+                document.documentElement.classList.remove('anchor-loading');
+            }
+            window.addEventListener('load', revealAtAnchor);
+            setTimeout(revealAtAnchor, 1500);
+        })();
+    </script>
 
 </body>
 
