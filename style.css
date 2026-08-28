@@ -11,9 +11,12 @@ html{
 }
 
 :root{
-    --project-card-radius: 0px; /* auf z.B. 10px setzen fuer abgerundete Ecken */
+    --project-card-radius: 5px; /* auf 0px setzen fuer eckige Ecken */
+    --project-card-image-radius: 5px;
     --footer-height: 80px;
     --navbar-height: 75px;
+
+    --bg-page: #000000; /* reguläre Seiten-Hintergrundfarbe */
 
     --c-offwhite: #EFF1ED;
     --c-near-black: #373D20;
@@ -26,6 +29,24 @@ html{
 
 html.anchor-loading{
     visibility: hidden;
+}
+
+/* Lenis Smooth-Scroll */
+html.lenis,
+html.lenis body{
+    height: auto;
+}
+
+.lenis.lenis-smooth{
+    scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent]{
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped{
+    overflow: hidden;
 }
 
 a{
@@ -44,11 +65,11 @@ img{
 }
 
 html{
-    background: var(--c-offwhite);
+    background: var(--bg-page);
 }
 
 body{
-    background: var(--c-offwhite);
+    background: var(--bg-page);
     max-width: 1400px;
     margin: 0 auto;
     padding-top: var(--navbar-height);
@@ -157,20 +178,30 @@ body{
     font-weight: 500;
 }
 
-.hero{
+/* ---- Hero-Panels: je ein vollflaechiges Hintergrundfoto + Verlauf ---- */
+.hero-panel{
     position: relative;
     z-index: 0;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 100px 100px;
-    gap: 60px;
+    align-items: center;
+    padding: 100px;
     min-height: calc(100vh - var(--navbar-height));
     color: var(--c-offwhite);
 }
 
-.hero::before{
+.hero-panel--right{
+    justify-content: flex-end;
+}
+
+.hero-panel--left{
+    justify-content: flex-start;
+}
+
+/* Foto (full-bleed) + optionale Verlaeufe an den Raendern
+   --panel-fade-left/right/top/bottom : wie weit der Verlauf reicht (%)
+   --panel-fade-strength              : wie kraeftig er ist (100% = deckend, 0% = aus)
+   --panel-fill                       : Farbe des Verlaufs / Randes */
+.hero-panel::before{
     content: "";
     position: absolute;
     top: 0;
@@ -178,60 +209,85 @@ body{
     left: 50%;
     width: 100vw;
     transform: translateX(-50%);
-    background: var(--c-taupe);
+    --_fade: var(--panel-fill, var(--c-taupe)); /* Fallback ohne color-mix: volle Deckung */
+    background-color: var(--panel-fill, var(--c-taupe));
+    background-image:
+        linear-gradient(to right,  var(--_fade) 0, transparent var(--panel-fade-left, 0%)),
+        linear-gradient(to left,   var(--_fade) 0, transparent var(--panel-fade-right, 0%)),
+        linear-gradient(to bottom, var(--_fade) 0, transparent var(--panel-fade-top, 0%)),
+        linear-gradient(to top,    var(--_fade) 0, transparent var(--panel-fade-bottom, 0%)),
+        var(--panel-image);
+    background-size:
+        100% 100%, 100% 100%, 100% 100%, 100% 100%,
+        var(--panel-zoom, 130%);
+    background-position:
+        0 0, 0 0, 0 0, 0 0,
+        calc(50% + var(--panel-shift-x, 0px)) calc(50% + var(--panel-shift-y, 0px));
+    background-repeat: no-repeat;
+    border-radius: 40px 40px 0 0;
+    box-shadow: 0 -24px 70px rgba(0, 0, 0, 0.22);
+    z-index: -2;
+}
+
+/* Intensitaet des Verlaufs (nur wo color-mix unterstuetzt wird) */
+@supports (background: color-mix(in srgb, red, blue)){
+    .hero-panel::before{
+        --_fade: color-mix(in srgb,
+            var(--panel-fill, var(--c-taupe)) var(--panel-fade-strength, 100%),
+            transparent);
+    }
+}
+
+/* Verlauf zur Textseite hin, damit der Text lesbar bleibt */
+.hero-panel::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
+    border-radius: 40px 40px 0 0;
     z-index: -1;
 }
 
-.hero__intro,
-.hero__experience,
-.hero__current{
-    width: 100%;
+.hero-panel--right::after{
+    background:
+        linear-gradient(90deg, rgba(38, 32, 28, 0) 0%, rgba(38, 32, 28, 0) 30%, rgba(38, 32, 28, 0.5) 65%, rgba(38, 32, 28, 0.82) 100%),
+        rgba(38, 32, 28, 0.15);
 }
 
-.hero__intro,
-.hero__current,
-.hero__experience_content{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: 100px;
+.hero-panel--left::after{
+    background:
+        linear-gradient(270deg, rgba(38, 32, 28, 0) 0%, rgba(38, 32, 28, 0) 30%, rgba(38, 32, 28, 0.5) 65%, rgba(38, 32, 28, 0.82) 100%),
+        rgba(38, 32, 28, 0.15);
 }
 
-.hero__image{
-    width: 100%;
-    height: 450px;
+/* Erstes Panel = Seitenanfang: oben eckig, kein Schatten nach oben */
+.hero-panel:first-child::before,
+.hero-panel:first-child::after{
+    border-radius: 0;
 }
 
-.hero__intro_text,
-.hero__experience_text,
-.hero__current_text{
+.hero-panel:first-child::before{
+    box-shadow: none;
+}
+
+.hero-panel__text{
+    position: relative;
     max-width: 480px;
+    text-shadow: 0 1px 24px rgba(0, 0, 0, 0.35);
 }
 
-.hero__current_text{
-    justify-self: end;
-}
-
-.hero__intro h1{
+.hero-panel__text h1,
+.hero-panel__text h3{
     font-size: 32px;
     line-height: 40px;
     font-weight: 400;
     margin-bottom: 10px;
-    width: 100%;
 }
 
-.hero__experience h3,
-.hero__current h3{
-    font-size: 32px;
-    line-height: 40px;
-    font-weight: 400;
-    margin-bottom: 10px;
-    width: 100%;
-}
-
-.hero__intro_text p,
-.hero__experience p,
-.hero__current p{
+.hero-panel__text p{
     color: var(--c-offwhite);
     font-weight: 500;
     line-height: 24px;
@@ -268,7 +324,7 @@ body{
 .showcase{
     position: relative;
     z-index: 0;
-    padding: 80px 100px 100px;
+    padding: 100px 100px 110px;
 }
 
 .showcase::before{
@@ -279,7 +335,7 @@ body{
     left: 50%;
     width: 100vw;
     transform: translateX(-50%);
-    background: var(--c-olive);
+    background: var(--c-black);
     z-index: -1;
 }
 
@@ -341,18 +397,18 @@ body{
 .category__projects{
     margin-top: 40px;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 20px;
 }
 
 .project-card{
     position: relative;
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: column;
     align-items: stretch;
-    gap: 24px;
-    width: 100%;
-    min-height: 200px;
+    gap: 0;
+    width: calc(25% - 15px);
+    min-height: 320px;
     padding: 20px;
     background: #fff;
     border: 1px solid #e5e7eb;
@@ -370,10 +426,11 @@ body{
 }
 
 .project-card__image{
-    width: 280px;
-    height: 100%;
+    width: 100%;
+    height: 220px;
     flex-shrink: 0;
-    border-radius: var(--project-card-radius);
+    margin-bottom: 20px;
+    border-radius: var(--project-card-image-radius);
     object-fit: cover;
     object-position: top center;
     border: 1px solid #e5e7eb;
@@ -384,28 +441,24 @@ body{
     min-width: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
 }
 
 .project-card__info{
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    gap: 12px;
+    justify-content: space-between;
+    gap: 6px;
     margin-bottom: 8px;
 }
 
 .project-card__info h5{
-    font-size: 32px;
-    line-height: 40px;
-    font-weight: 400;
+    font-size: 17px;
+    line-height: 24px;
+    font-weight: 500;
     transition: color 0.3s ease;
 }
 
 .project-card__info p{
-    position: absolute;
-    left: 20px;
-    bottom: 20px;
     font-size: 12px;
     color: #6b7280;
     font-weight: 500;
@@ -419,8 +472,8 @@ body{
 }
 
 .project-card__desc{
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 13px;
+    line-height: 20px;
     color: #7a7a7a;
     margin-bottom: 0;
     transition: color 0.3s ease;
@@ -429,7 +482,7 @@ body{
 .career{
     position: relative;
     z-index: 0;
-    padding: 60px 100px 80px;
+    padding: 96px 100px 100px;
     display: flex;
     align-items: center;
     gap: 100px;
@@ -532,7 +585,7 @@ body{
     position: relative;
     z-index: 0;
     text-align: center;
-    padding: 60px;
+    padding: 96px 60px 80px;
     color: var(--c-offwhite);
 }
 
@@ -546,6 +599,56 @@ body{
     transform: translateX(-50%);
     background: var(--c-black);
     z-index: -1;
+}
+
+/* ---- Sticky-Stack: Panels stapeln sich beim Scrollen uebereinander ---- */
+main > .hero-panel,
+main > .showcase,
+main > .career,
+main > .contact{
+    position: sticky;
+    top: var(--navbar-height);
+    transform-origin: center top;
+}
+
+.showcase::before,
+.career::before,
+.contact::before{
+    border-radius: 40px 40px 0 0;
+    box-shadow: 0 -24px 70px rgba(0, 0, 0, 0.22);
+}
+
+/* Das Zuruecktreten (scale) nur, wenn Bewegung ok ist */
+@media (prefers-reduced-motion: no-preference){
+    main > .hero-panel,
+    main > .showcase,
+    main > .career,
+    main > .contact{
+        transform: scale(calc(1 - 0.045 * var(--stack-p, 0)));
+    }
+}
+
+/* ---- Scroll-Reveal ---- */
+.reveal{
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0s);
+    will-change: opacity, transform;
+}
+
+.reveal.is-visible{
+    opacity: 1;
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce){
+    .reveal{
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
 }
 
 .contact h5{
@@ -630,37 +733,12 @@ body{
 
 @media screen and (max-width: 1230px) {
 
-    .hero__intro,
-    .hero__experience_content{
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .hero__current{
-        display: flex;
-        flex-direction: column-reverse;
-        align-items: flex-start;
-    }
-
-    .hero__image{
-        width: 100%;
-        height: auto;
-    }
-
-    .hero__intro h1{
-        font-size: 30px;
-        text-align: left;
-    }
-
-    .hero__experience h3,
-    .hero__current h3{
+    .hero-panel__text h1,
+    .hero-panel__text h3{
         font-size: 30px;
     }
 
-    .hero__intro_text p,
-    .hero__experience p,
-    .hero__current p{
+    .hero-panel__text p{
         font-size: 15px;
         line-height: 22px;
     }
@@ -677,24 +755,17 @@ body{
         padding: 20px 30px;
     }
 
-    .hero{
-        padding: 100px 30px 40px;
+    .hero-panel{
+        padding: 100px 30px;
     }
 
-    .hero__intro h1{
+    .hero-panel__text h1,
+    .hero-panel__text h3{
         font-size: 22px;
         line-height: 34px;
     }
 
-    .hero__experience h3,
-    .hero__current h3{
-        font-size: 22px;
-        line-height: 34px;
-    }
-
-    .hero__intro_text p,
-    .hero__experience p,
-    .hero__current p{
+    .hero-panel__text p{
         font-size: 13px;
         line-height: 20px;
     }
@@ -706,7 +777,11 @@ body{
     }
 
     .showcase{
-        padding: 80px 30px 100px;
+        padding: 90px 30px 100px;
+    }
+
+    .project-card{
+        width: calc(50% - 10px);
     }
 
     .category__header{
@@ -718,7 +793,7 @@ body{
     }
 
     .career{
-        padding: 60px 30px 80px;
+        padding: 90px 30px 90px;
         flex-direction: column;
         gap: 60px;
     }
@@ -736,21 +811,44 @@ body{
         display: none;
     }
 
-    .hero{
-        flex-direction: column;
-        height: auto;
-        padding: 40px 30px 0px;
-        gap: 30px;
+    .hero-panel{
+        padding: 90px 24px calc(28px + var(--footer-height));
+        align-items: flex-end;
+        justify-content: flex-start;
     }
 
-    .hero__intro,
-    .hero__experience,
-    .hero__current{
-        width: 100%;
+    .hero-panel::before{
+        background-size:
+            100% 100%, 100% 100%, 100% 100%, 100% 100%,
+            var(--panel-zoom-mobile, cover);
+        background-position:
+            0 0, 0 0, 0 0, 0 0,
+            calc(50% + var(--panel-shift-x-mobile, 0px)) calc(50% + var(--panel-shift-y-mobile, 0px));
     }
 
-    .hero__intro h1{
-        width: 100%;
+    .hero-panel__text{
+        max-width: 100%;
+    }
+
+    /* auf schmalen Screens: Verlauf von unten, Text unten */
+    .hero-panel--right::after,
+    .hero-panel--left::after{
+        background:
+            linear-gradient(180deg, rgba(38, 32, 28, 0) 0%, rgba(38, 32, 28, 0.35) 45%, rgba(38, 32, 28, 0.92) 100%),
+            rgba(38, 32, 28, 0.15);
+    }
+
+    .hero-panel::before,
+    .hero-panel::after,
+    .showcase::before,
+    .career::before,
+    .contact::before{
+        border-radius: 28px 28px 0 0;
+    }
+
+    .hero-panel:first-child::before,
+    .hero-panel:first-child::after{
+        border-radius: 0;
     }
 
     .showcase__header h3{
@@ -762,18 +860,12 @@ body{
     }
 
     .project-card{
-        flex-direction: column;
-        align-items: stretch;
+        width: 100%;
         height: auto;
     }
 
     .project-card__image{
-        width: 100%;
         height: 220px;
-    }
-
-    .project-card__body{
-        justify-content: flex-start;
     }
 
     .career h3{
