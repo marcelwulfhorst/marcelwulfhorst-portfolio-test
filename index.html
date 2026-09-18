@@ -7,12 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Marcel Wulfhorst – Prozessentwickler, Digitalisierer und Programmierer bei INNO TAPE.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css"
-        integrity="sha512-MqL4+Io386IOPMKKyplKII0pVW5e+kb+PI/I3N87G3fHIfrgNNsRpzIXEi+0MQC0sR9xZNqZqCYVcC61fL5+Vg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="assets/css/remixicon.min.css">
     <link rel="stylesheet" href="style.css">
     <title>Personal Portfolio Website | Marcel Wulfhorst</title>
     <script>
@@ -253,7 +248,11 @@
 
     <footer class="footer">
         <div class="footer__brand">
-            <p>© 2026 Marcel Wulfhorst.</p>
+            <p>© 2026 Marcel Wulfhorst & jeweilige Rechtinhaber. Alle Rechte vorbehalten.</p>
+            <div class="footer__links">
+                <a href="impressum.html">Impressum</a>
+                <a href="datenschutz.html">Datenschutz</a>
+            </div>
         </div>
 
         <div class="hero__socials">
@@ -321,6 +320,7 @@
         (function () {
             var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             var root = document.documentElement;
+            var lenis = null;
 
             function navHeight() {
                 return parseFloat(getComputedStyle(root).getPropertyValue('--navbar-height')) || 75;
@@ -330,6 +330,20 @@
             var panels = Array.prototype.slice.call(
                 document.querySelectorAll('main > section')
             );
+
+            // Zielposition eines Panels ermitteln, ohne vom Sticky-Stack verfaelscht zu werden:
+            // getBoundingClientRect() liefert fuer ein gerade "eingerastetes" (sticky) Panel immer
+            // dessen fixierte Bildschirmposition, nicht die echte Position im Dokument – dadurch
+            // scrollte ein Klick auf die Navbar-Links am Seitenende ins Leere. Fix: alle Panels kurz
+            // auf position:static umschalten, messen, sofort zuruecksetzen (synchron, kein Flackern).
+            function measureStaticTop(el) {
+                var prevPos = panels.map(function (p) { return p.style.position; });
+                panels.forEach(function (p) { p.style.position = 'static'; });
+                void document.body.offsetHeight;
+                var top = el.getBoundingClientRect().top + window.scrollY;
+                panels.forEach(function (p, i) { p.style.position = prevPos[i]; });
+                return Math.round(top);
+            }
 
             // --- Feinschliff: ueberdecktes Panel tritt zurueck (scale) ---
             // Der eigentliche Sticky-Stack laeuft rein ueber CSS, auch ohne dieses Skript.
@@ -361,38 +375,44 @@
             window.addEventListener('resize', requestUpdate);
             updateStack();
 
+            // Anker-Klicks (Navbar + Buttons) – unabhaengig von Lenis/Motion-Settings lauffaehig.
+            document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+                link.addEventListener('click', function (e) {
+                    var id = link.getAttribute('href');
+                    if (id.length < 2) {
+                        return;
+                    }
+                    var target = document.querySelector(id);
+                    if (!target) {
+                        return;
+                    }
+                    e.preventDefault();
+                    var y = measureStaticTop(target) - navHeight();
+                    if (lenis) {
+                        lenis.scrollTo(y);
+                    } else {
+                        window.scrollTo({ top: y, behavior: reduceMotion ? 'auto' : 'smooth' });
+                    }
+                });
+            });
+
             // --- Smooth / Momentum Scroll via Lenis (nicht blockierend nachladen) ---
             if (reduceMotion) {
                 return;
             }
 
             var s = document.createElement('script');
-            s.src = 'https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js';
+            s.src = 'assets/js/lenis.min.js';
             s.async = true;
             s.onload = function () {
                 if (typeof window.Lenis !== 'function') {
                     return;
                 }
-                var lenis = new window.Lenis({ lerp: 0.1, smoothWheel: true, wheelMultiplier: 1 });
+                lenis = new window.Lenis({ lerp: 0.1, smoothWheel: true, wheelMultiplier: 1 });
                 lenis.on('scroll', updateStack);
                 requestAnimationFrame(function raf(time) {
                     lenis.raf(time);
                     requestAnimationFrame(raf);
-                });
-
-                document.querySelectorAll('a[href^="#"]').forEach(function (link) {
-                    link.addEventListener('click', function (e) {
-                        var id = link.getAttribute('href');
-                        if (id.length < 2) {
-                            return;
-                        }
-                        var target = document.querySelector(id);
-                        if (!target) {
-                            return;
-                        }
-                        e.preventDefault();
-                        lenis.scrollTo(target, { offset: -navHeight() });
-                    });
                 });
             };
             document.head.appendChild(s);

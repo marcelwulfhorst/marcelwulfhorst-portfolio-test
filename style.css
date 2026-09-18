@@ -1,3 +1,39 @@
+@font-face{
+    font-family: "Mulish";
+    font-style: normal;
+    font-weight: 200 1000;
+    font-display: swap;
+    src: url("assets/fonts/mulish-latin-normal.woff2") format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face{
+    font-family: "Mulish";
+    font-style: normal;
+    font-weight: 200 1000;
+    font-display: swap;
+    src: url("assets/fonts/mulish-latin-ext-normal.woff2") format("woff2");
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face{
+    font-family: "Mulish";
+    font-style: italic;
+    font-weight: 200 1000;
+    font-display: swap;
+    src: url("assets/fonts/mulish-latin-italic.woff2") format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face{
+    font-family: "Mulish";
+    font-style: italic;
+    font-weight: 200 1000;
+    font-display: swap;
+    src: url("assets/fonts/mulish-latin-ext-italic.woff2") format("woff2");
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
 *{
     margin: 0;
     padding: 0;
@@ -140,10 +176,16 @@ body{
     gap: 40px;
 }
 
-.navbar__link,
-.footer__links a{
+.navbar__link{
     font-size: 14px;
     font-weight: 500;
+    transition: all 0.5s ease;
+}
+
+.footer__links a{
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--c-offwhite);
     transition: all 0.5s ease;
 }
 
@@ -152,7 +194,7 @@ body{
 }
 
 .footer__links a:hover{
-    color: var(--c-offwhite);
+    color: var(--c-terracotta);
 }
 
 .navbar__actions{
@@ -717,17 +759,14 @@ main > .contact{
 .footer__brand{
     display: flex;
     align-items: flex-end;
+    flex-wrap: wrap;
     gap: 30px;
-}
-
-.footer__brand a{
-    font-weight: bold;
-    font-size: 18px;
+    row-gap: 6px;
 }
 
 .footer__brand p{
     font-size: 13px;
-    color: var(--c-sage);
+    color: var(--c-offwhite);
     font-weight: 500;
 }
 
@@ -873,12 +912,22 @@ main > .contact{
     }
 
     :root{
-        --footer-height: 116px;
+        --footer-height: 150px;
     }
 
     .footer{
         flex-direction: column-reverse;
         gap: 16px;
+    }
+
+    .footer__brand{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .footer__links{
+        gap: 20px;
     }
 
 }
@@ -1002,6 +1051,53 @@ main > .contact{
     color: rgba(239, 241, 237, 0.75);
     font-size: 15px;
     line-height: 24px;
+}
+
+.legal-content{
+    max-width: 760px;
+}
+
+.legal-content h2{
+    font-size: 20px;
+    font-weight: 500;
+    margin: 30px 0 12px;
+}
+
+.legal-content h2:first-child{
+    margin-top: 0;
+}
+
+.legal-content h3{
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--c-offwhite);
+    margin: 20px 0 8px;
+}
+
+.legal-content p{
+    font-size: 15px;
+    line-height: 24px;
+    color: rgba(239, 241, 237, 0.75);
+    margin-bottom: 16px;
+}
+
+.legal-content ul{
+    margin: 0 0 16px 20px;
+    color: rgba(239, 241, 237, 0.75);
+    font-size: 15px;
+    line-height: 24px;
+}
+
+.legal-content a{
+    color: var(--c-terracotta);
+}
+
+.legal-content a:hover{
+    text-decoration: underline;
+}
+
+.legal-content strong{
+    color: var(--c-offwhite);
 }
 
 @media screen and (max-width: 768px) {
