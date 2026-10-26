@@ -1,3 +1,18 @@
+/*
+ * Hover-Farben – Regel nach Funktion:
+ *
+ * Terrakotta (--c-terracotta): Navigation & Bedienelemente
+ *   Header-Logo und Menülinks, Buttons, Projektkarten, Footer-Links,
+ *   Social-Icons, "Zurück"-Links. Effekt: Text- bzw. Flächenfarbe.
+ *
+ * Salbei (--c-sage): Links im Fließtext
+ *   z. B. Mail-Adresse im Kontakt-Bereich, Links in Impressum/Datenschutz.
+ *   Effekt: Farbe + Unterstreichung.
+ *
+ * Kontrast: Terrakotta auf hellem Grund 4.9:1, auf Schwarz 3.8:1 (bewusst
+ * in Kauf genommen), auf --c-near-black nur 2.1:1 – dort Salbei (5.8:1).
+ */
+
 @font-face{
     font-family: "Mulish";
     font-style: normal;
@@ -176,9 +191,17 @@ body{
     gap: 40px;
 }
 
+.footer__links{
+    gap: 16px;
+}
+
 .navbar__link{
     font-size: 14px;
     font-weight: 500;
+    transition: all 0.5s ease;
+}
+
+.navbar__logo{
     transition: all 0.5s ease;
 }
 
@@ -189,6 +212,7 @@ body{
     transition: all 0.5s ease;
 }
 
+.navbar__logo:hover,
 .navbar__link:hover{
     color: var(--c-terracotta);
 }
@@ -524,10 +548,13 @@ body{
 .career{
     position: relative;
     z-index: 0;
-    padding: 96px 100px 100px;
-    display: flex;
-    align-items: center;
-    gap: 100px;
+    padding: 100px;
+    /* Zwei gleich breite Spalten, als Gruppe mittig */
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 340px));
+    justify-content: center;
+    align-items: start;
+    column-gap: 140px;
     color: var(--c-offwhite);
 }
 
@@ -545,7 +572,6 @@ body{
 
 .career__jobs,
 .career__awards{
-    width: 50%;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -563,28 +589,61 @@ body{
     align-items: center;
     gap: 20px;
     padding-bottom: 20px;
-    border-bottom: 2px solid rgba(239, 241, 237, 0.2);
 }
 
-.job i,
+.job:last-child,
+.award:last-child{
+    padding-bottom: 0;
+}
+
+/* Berufserfahrung als Zeitstrahl: Punkt + senkrechte Linie zur nächsten Station */
+.career__jobs .job{
+    position: relative;
+    align-items: flex-start;
+    padding-left: 36px;
+}
+
+.career__jobs .job::before{
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 24px;
+    bottom: -18px;
+    width: 2px;
+    background: rgba(239, 241, 237, 0.2);
+}
+
+.career__jobs .job:last-child::before{
+    display: none;
+}
+
+.job__dot{
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--c-terracotta);
+    background: var(--c-near-black);
+}
+
+.job--current .job__dot{
+    background: var(--c-terracotta);
+}
+
+/* Zusatzqualifikationen passend zum Zeitstrahl: freistehende Icons, gleiche Texteinrückung (20px + 16px = 36px) */
 .award div i{
+    width: 20px;
     font-size: 20px;
-    padding: 10px;
-    background: #fff;
+    line-height: 20px;
     color: var(--c-terracotta);
-    border-radius: 10px;
-    font-weight: bold;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
-.award{
-    justify-content: space-between;
 }
 
 .award > div{
     display: flex;
-    align-items: center;
-    gap: 20px;
+    align-items: flex-start;
+    gap: 16px;
 }
 
 .job__info h5,
@@ -603,24 +662,6 @@ body{
     font-size: 13px;
     color: rgba(239, 241, 237, 0.75);
     font-weight: 500;
-}
-
-.award a{
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6px;
-    border-radius: 50%;
-    transition: background 0.3s ease;
-}
-
-.award a i{
-    font-size: 24px;
-    color: var(--c-offwhite);
-}
-
-.award a:hover{
-    background: var(--c-terracotta);
 }
 
 .contact{
@@ -751,16 +792,25 @@ main > .contact{
     background: var(--c-black);
 }
 
+/* Footer-Icons ohne Kreis – unsichtbare Klickfläche, Hover wie die Footer-Links */
 .footer .hero__socials a{
     color: var(--c-offwhite);
-    border-color: rgba(239, 241, 237, 0.3);
+    border: none;
+    border-radius: 0;
+    padding: 4px;
+    font-size: 22px;
+}
+
+.footer .hero__socials a:hover{
+    background: none;
+    color: var(--c-terracotta);
 }
 
 .footer__brand{
     display: flex;
     align-items: flex-end;
     flex-wrap: wrap;
-    gap: 30px;
+    gap: 16px;
     row-gap: 6px;
 }
 
@@ -768,6 +818,21 @@ main > .contact{
     font-size: 13px;
     color: var(--c-offwhite);
     font-weight: 500;
+}
+
+/* Pipe-Trenner: © … | Impressum | Datenschutz */
+.footer__brand p::after,
+.footer__links a + a::before{
+    content: "|";
+    color: rgba(239, 241, 237, 0.5);
+}
+
+.footer__brand p::after{
+    margin-left: 16px;
+}
+
+.footer__links a + a::before{
+    margin-right: 16px;
 }
 
 @media screen and (max-width: 1230px) {
@@ -833,8 +898,8 @@ main > .contact{
 
     .career{
         padding: 90px 30px 90px;
-        flex-direction: column;
-        gap: 60px;
+        grid-template-columns: minmax(0, 1fr);
+        row-gap: 60px;
     }
 
     .footer{
@@ -926,8 +991,9 @@ main > .contact{
         gap: 6px;
     }
 
-    .footer__links{
-        gap: 20px;
+    /* Copyright steht mobil in eigener Zeile – dort kein Trenner */
+    .footer__brand p::after{
+        display: none;
     }
 
 }
@@ -1053,6 +1119,26 @@ main > .contact{
     line-height: 24px;
 }
 
+/* Hinweis zu den Rechten am Projekt (unter dem Projektinhalt) */
+.project-detail__notice{
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 2px solid rgba(239, 241, 237, 0.2);
+    font-size: 13px;
+    line-height: 20px;
+    font-weight: 500;
+    color: rgba(239, 241, 237, 0.6);
+}
+
+.project-detail__notice i{
+    font-size: 18px;
+    line-height: 20px;
+    color: var(--c-terracotta);
+}
+
 .legal-content{
     max-width: 760px;
 }
@@ -1088,11 +1174,13 @@ main > .contact{
     line-height: 24px;
 }
 
+/* Gleicher Link-Effekt wie im Kontakt-Bereich der Startseite */
 .legal-content a{
-    color: var(--c-terracotta);
+    color: inherit;
 }
 
 .legal-content a:hover{
+    color: var(--c-sage);
     text-decoration: underline;
 }
 
