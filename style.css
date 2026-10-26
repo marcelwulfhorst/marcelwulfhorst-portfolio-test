@@ -202,7 +202,28 @@ body{
 }
 
 .navbar__logo{
+    white-space: nowrap;
     transition: all 0.5s ease;
+}
+
+/* Hamburger-Button – nur in der Handy-Ansicht sichtbar (Logik: assets/js/nav.js) */
+.navbar__toggle{
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-right: -8px;
+    border: none;
+    background: none;
+    font-size: 26px;
+    color: var(--c-near-black);
+    cursor: pointer;
+    transition: color 0.5s ease;
+}
+
+.navbar__toggle:hover{
+    color: var(--c-terracotta);
 }
 
 .footer__links a{
@@ -915,6 +936,38 @@ main > .contact{
     
     .navbar__actions{
         display: none;
+    }
+
+    .navbar{
+        padding: 0 24px;
+    }
+
+    .navbar__toggle{
+        display: flex;
+    }
+
+    /* Aufgeklapptes Menue unter der Leiste */
+    .navbar__menu{
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        gap: 0;
+        padding: 4px 24px 16px;
+        background: var(--c-offwhite);
+        box-shadow: 0 16px 30px rgba(0, 0, 0, 0.18);
+    }
+
+    .navbar.is-open .navbar__menu{
+        display: flex;
+    }
+
+    .navbar__menu .navbar__link{
+        padding: 12px 0;
+        font-size: 16px;
+        border-top: 1px solid rgba(55, 61, 32, 0.12);
     }
 
     .hero-panel{

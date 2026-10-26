@@ -7,6 +7,7 @@
     <meta name="description" content="Portfolio-4 – Projektdetails von Marcel Wulfhorst.">
     <link rel="stylesheet" href="../assets/css/remixicon.min.css">
     <link rel="stylesheet" href="../style.css">
+    <script src="../assets/js/nav.js" defer></script>
     <title>Portfolio-4 | Marcel Wulfhorst</title>
 </head>
 
@@ -16,7 +17,9 @@
 
         <a href="../index.html" class="navbar__logo">MARCEL WULFHORST</a>
 
-        <div class="navbar__menu">
+        <button class="navbar__toggle" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="navbar-menu"><i class="ri-menu-line"></i></button>
+
+        <div class="navbar__menu" id="navbar-menu">
             <a href="../index.html#hero" class="navbar__link">Über mich</a>
             <a href="../index.html#portfolio" class="navbar__link">Projekte</a>
             <a href="../index.html#career" class="navbar__link">Bio</a>

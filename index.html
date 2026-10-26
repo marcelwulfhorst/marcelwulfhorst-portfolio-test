@@ -9,6 +9,7 @@
     <meta name="description" content="Marcel Wulfhorst – Prozessentwickler, Digitalisierer und Programmierer bei INNO TAPE.">
     <link rel="stylesheet" href="assets/css/remixicon.min.css">
     <link rel="stylesheet" href="style.css">
+    <script src="assets/js/nav.js" defer></script>
     <title>Personal Portfolio Website | Marcel Wulfhorst</title>
     <script>
         if (window.location.hash) {
@@ -23,7 +24,9 @@
 
         <a href="#" class="navbar__logo">MARCEL WULFHORST</a>
 
-        <div class="navbar__menu">
+        <button class="navbar__toggle" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="navbar-menu"><i class="ri-menu-line"></i></button>
+
+        <div class="navbar__menu" id="navbar-menu">
             <a href="#hero" class="navbar__link">Über mich</a>
             <a href="#portfolio" class="navbar__link">Projekte</a>
             <a href="#career" class="navbar__link">Bio</a>
