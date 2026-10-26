@@ -1,0 +1,60 @@
+# Veröffentlicht die Website auf GitHub Pages – mit Passwortschutz (StatiCrypt).
+# Das Passwort steht NICHT hier, sondern im Repo-Secret "SITE_PASSWORD".
+name: Deploy (passwortgeschützt)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Seite zusammenstellen
+        run: |
+          mkdir -p _site/projekte
+          cp -r assets style.css CNAME _site/
+
+      - name: Seiten verschlüsseln
+        env:
+          PASSWORD: ${{ secrets.SITE_PASSWORD }}
+        run: |
+          # Gemeinsamer Salt, damit "Angemeldet bleiben" für alle Seiten gilt
+          SALT=$(openssl rand -hex 16)
+          OPTS=(
+            -p "$PASSWORD" -s "$SALT" -c false --short --remember 30
+            --template-title "Geschützter Bereich"
+            --template-instructions "Bitte gib das Passwort ein, um die Website zu sehen."
+            --template-placeholder "Passwort"
+            --template-button "Öffnen"
+            --template-remember "Angemeldet bleiben"
+            --template-error "Falsches Passwort"
+          )
+          npx --yes staticrypt@3 index.html impressum.html datenschutz.html -d _site "${OPTS[@]}"
+          (cd projekte && npx --yes staticrypt@3 *.html -d ../_site/projekte "${OPTS[@]}")
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
