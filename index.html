@@ -339,6 +339,34 @@
                 return Math.round(top);
             }
 
+            // --- Hohe Panels (v. a. mobil: Projekte, Bio) ---
+            // Mit fixem sticky-top wuerde ein Panel, das hoeher als der Bildschirm ist, oben einrasten
+            // und sein unterer Teil waere nie sichtbar. Daher rastet es erst ein, wenn sein unteres
+            // Ende ueber dem fixierten Footer angekommen ist.
+            var footer = document.querySelector('.footer');
+
+            function updateStickTops() {
+                var vh = window.innerHeight;
+                var navH = navHeight();
+                var footH = footer ? footer.offsetHeight : 0;
+                panels.forEach(function (p) {
+                    var h = p.offsetHeight;
+                    if (h > vh - navH) {
+                        p.style.setProperty('--stick-top', Math.round(vh - footH - h) + 'px');
+                    } else {
+                        p.style.removeProperty('--stick-top');
+                    }
+                });
+            }
+
+            updateStickTops();
+            window.addEventListener('resize', updateStickTops);
+            window.addEventListener('load', updateStickTops);
+            if ('ResizeObserver' in window) {
+                var ro = new ResizeObserver(updateStickTops);
+                panels.forEach(function (p) { ro.observe(p); });
+            }
+
             // --- Feinschliff: ueberdecktes Panel tritt zurueck (scale) ---
             // Der eigentliche Sticky-Stack laeuft rein ueber CSS, auch ohne dieses Skript.
             var ticking = false;

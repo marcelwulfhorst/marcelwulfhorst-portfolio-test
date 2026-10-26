@@ -690,7 +690,9 @@ main > .showcase,
 main > .career,
 main > .contact{
     position: sticky;
-    top: var(--navbar-height);
+    /* --stick-top setzt das Skript in index.html für Panels, die höher als der Bildschirm sind
+       (negativ: das Panel scrollt erst komplett durch und rastet dann mit seinem unteren Ende ein) */
+    top: var(--stick-top, var(--navbar-height));
     transform-origin: center top;
 }
 
